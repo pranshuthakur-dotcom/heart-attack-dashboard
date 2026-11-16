@@ -163,21 +163,23 @@ st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
 fig_hist = px.histogram(filtered_df, x="Systolic_BP")
 st.plotly_chart(fig_hist, use_container_width=True, key="histogram_chart_1")
 
+# --- 1. UNIFORM CHART HEIGHT SIZING ---
 chart_height = 400
 
-fig_scatter.update_layout(height=chart_height, use_container_width=True)
-fig_box.update_layout(height=chart_height, use_container_width=True)
-fig_hist.update_layout(height=chart_height, use_container_width=True)
-fig_parcoords.update_layout(height=chart_height, use_container_width=True)
+fig_scatter.update_layout(height=chart_height)
+fig_box.update_layout(height=chart_height)
+fig_hist.update_layout(height=chart_height)
 
+# --- 2. UNIFORM TABLE PREVIEW ---
 st.subheader("Filtered Patient Data Preview")
 st.dataframe(filtered_df.head(5), use_container_width=True)
 
+# --- 3. RENDER STANDARD CHARTS (NO CONFLICTING KEYS) ---
 st.plotly_chart(fig_scatter, use_container_width=True)
 st.plotly_chart(fig_box, use_container_width=True)
 st.plotly_chart(fig_hist, use_container_width=True)
-st.plotly_chart(fig_parcoords, use_container_width=True)
 
+# --- 4. YOUR PRESERVED PARALLEL COORDINATES BLOCK ---
 print("Available columns:", filtered_df.columns.tolist())
 
 par_dims = ["Age", "Cholesterol", "Systolic_BP", "BMI"]
@@ -195,6 +197,8 @@ if not filtered_df.empty:
         dimensions=par_dims,
         color_continuous_scale=px.colors.sequential.Viridis
     )
+    # Apply uniform height layout safely
+    fig_parcoords.update_layout(height=chart_height)
 else:
     st.warning("No data available for current filter selection.")
 
