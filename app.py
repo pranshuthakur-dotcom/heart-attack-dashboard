@@ -96,17 +96,13 @@ df.columns = df.columns.str.strip().str.replace(' ', '_')
 # 6. Cleaning Step - create sidebar filters and filter_df
 st.sidebar.header("Patient Filter Controls")
 
-# Dynamically find gender column name
 gender_col = next((col for col in ["Gender", "Patient_Gender", "Sex"] if col in df.columns), None)
-
 selected_gender = "All"
-
 if gender_col:
     selected_gender = st.sidebar.selectbox("Select Gender", options=["All"] + list(df[gender_col].unique()), key="unique_gender_key")
 
 age_range = st.sidebar.slider("Select Age Range", min_value=int(df["Age"].min()), max_value=int(df["Age"].max()), value=(30, 70), key="unique_age_key")
 
-# Create filtered_df right here
 filtered_df = df.copy()
 if gender_col and selected_gender != "All":
     filtered_df = filtered_df[filtered_df[gender_col] == selected_gender]
@@ -155,29 +151,9 @@ st.plotly_chart(fig, use_container_width=True)
 # 
 # ---Loaded pandas, numpy, Streamlit (st), and Plotly Express (px). Verified data loads correctly without missing values.
 # 
-# Step 2: Adding Interactive Widgets
-# 
-# ---Created sidebar controls using simple Streamlit functions so users can filter the dataset dynamically:
-
-import pip
-pip.main(['install', 'streamlit', 'plotly'])
-
-import streamlit as st
-
-# Creating sidebar widgets for linked filtering
-st.sidebar.header("Patient Filter Controls")
-selected_gender = st.sidebar.selectbox("Select Gender", options=["All", "Male", "Female"])
-age_range = st.sidebar.slider("Select Age Range", min_value=20, max_value=90, value=(30, 70))
-
-# Step 3: Implementing Linked Interactivity
+# Step 2: Implementing Linked Interactivity
 # 
 # ---Applied the sidebar selections to filter the underlying pandas DataFrame in real time. Whenever a user moves the age slider, all four chart functions re-render instantly using the filtered subset.
-
-# Filter dataframe based on user inputs
-filtered_df = df.copy()
-if selected_gender != "All":
-    filtered_df = filtered_df[filtered_df["Gender"] == selected_gender]
-filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["Age"] <= age_range[1])]
 
 fig_scatter = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
 st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart_1")
