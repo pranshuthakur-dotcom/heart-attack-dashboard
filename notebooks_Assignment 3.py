@@ -69,8 +69,10 @@
 # 
 # 7. Heart_Attack_Risk: Binary indicator (0 = No Risk, 1 = Risk)
 
+import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
 
 # 1. Load the dataset from local CSV file
 df = pd.read_csv("heart_attack_prediction_dataset.csv")
@@ -92,7 +94,8 @@ df = df.dropna()
 df.columns = df.columns.str.strip().str.replace(' ', '_')
 
 print(f"Cleaned dataset shape: {df.shape}")
-display(df.head(3))
+#display(df.head(3))
+st.dataframe(df.head(3))
 
 # **4. Visualization Techniques**
 # 
