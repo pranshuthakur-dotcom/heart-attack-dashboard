@@ -198,6 +198,24 @@ fig_parcoords = px.parallel_coordinates(
 )
 st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
 
+par_dims = ["Age", "Cholesterol", "Systolic_BP", "BMI", "Sleep_Hours", "Exercise_Hours_Per_Week"]
+for col in par_dims:
+    if col in filtered_df.columns:
+        filtered_df[col] = pd.to_numeric(filtered_df[col], errors="coerce")
+
+filtered_df["Risk_Numeric"] = filtered_df["Heart_Attack_Risk"].astype(int)
+
+if not filtered_df.empty:
+    fig_parcoords = px.parallel_coordinates(
+        filtered_df, 
+        color="Risk_Numeric",
+        dimensions=par_dims,
+        color_continuous_scale=px.colors.sequential.Inferno
+    )
+    st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
+else:
+    st.warning("No patient records match the selected filter criteria. Please adjust your slider or filters.")
+
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
 # 
 # Starting Question 1: Does weekly exercise hours alone protect patients against heart attack risk, regardless of age or cholesterol?
