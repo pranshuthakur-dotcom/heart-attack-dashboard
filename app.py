@@ -95,7 +95,7 @@ df.columns = df.columns.str.strip().str.replace(' ', '_')
 
 print(f"Cleaned dataset shape: {df.shape}")
 #display(df.head(3))
-st.dataframe(df.head(3))
+st.dataframe(filtered_df.head(3))
 
 # **4. Visualization Techniques**
 # 
@@ -156,6 +156,9 @@ filtered_df = df.copy()
 if selected_gender != "All":
     filtered_df = filtered_df[filtered_df["Gender"] == selected_gender]
 filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["Age"] <= age_range[1])]
+
+fig = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
+st.plotly_chart(fig)
 
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
 # 
