@@ -97,9 +97,11 @@ df.columns = df.columns.str.strip().str.replace(' ', '_')
 st.sidebar.header("Patient Filter Controls")
 
 gender_col = next((col for col in ["Gender", "Patient_Gender", "Sex"] if col in df.columns), None)
-selected_gender = "All"
-if gender_col:
-    selected_gender = st.sidebar.selectbox("Select Gender", options=["All"] + list(df[gender_col].unique()), key="unique_gender_key")
+selected_gender = st.sidebar.selectbox(
+    "Select Gender", 
+    options=["All", "Male", "Female"], 
+    key="gender_filter_key"
+)
 
 age_range = st.sidebar.slider("Select Age Range", min_value=int(df["Age"].min()), max_value=int(df["Age"].max()), value=(30, 70), key="unique_age_key")
 
@@ -111,9 +113,6 @@ filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["A
 # 7. Cleaning Step - carefully render tables and charts
 st.subheader("Filtered Patient Data Preview")
 st.dataframe(filtered_df.head(3))
-
-fig = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
-st.plotly_chart(fig, use_container_width=True)
 
 # **4. Visualization Techniques**
 # 
@@ -179,9 +178,8 @@ if not filtered_df.empty:
         filtered_df, 
         color="Risk_Numeric",
         dimensions=par_dims,
-        color_continuous_scale=px.colors.sequential.Inferno
+        color_continuous_scale=px.colors.sequential.Viridis
     )
-    st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_safe")
 else:
     st.warning("No data available for current filter selection.")
 
