@@ -166,9 +166,6 @@ fig_scatter.update_layout(height=chart_height)
 fig_box.update_layout(height=chart_height)
 fig_hist.update_layout(height=chart_height)
 
-st.subheader("Filtered Patient Data Preview")
-st.dataframe(filtered_df.head(5), use_container_width=True)
-
 st.plotly_chart(fig_scatter, use_container_width=True)
 st.plotly_chart(fig_box, use_container_width=True)
 st.plotly_chart(fig_hist, use_container_width=True)
