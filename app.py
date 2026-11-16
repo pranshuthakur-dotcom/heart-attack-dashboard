@@ -188,17 +188,10 @@ st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
 fig_hist = px.histogram(filtered_df, x="Systolic_BP")
 st.plotly_chart(fig_hist, use_container_width=True, key="histogram_chart_1")
 
-filtered_df["Risk_Numeric"] = filtered_df["Heart_Attack_Risk"].astype(int)
+print("Available columns:", filtered_df.columns.tolist())
 
-fig_parcoords = px.parallel_coordinates(
-    filtered_df, 
-    color="Risk_Numeric",
-    dimensions=["Age", "Cholesterol", "Systolic_BP", "BMI", "Sleep_Hours", "Exercise_Hours_Per_Week"],
-    color_continuous_scale=px.colors.sequential.Inferno
-)
-st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
+par_dims = ["Age", "Cholesterol", "Systolic_BP", "BMI"]
 
-par_dims = ["Age", "Cholesterol", "Systolic_BP", "BMI", "Sleep_Hours", "Exercise_Hours_Per_Week"]
 for col in par_dims:
     if col in filtered_df.columns:
         filtered_df[col] = pd.to_numeric(filtered_df[col], errors="coerce")
@@ -212,9 +205,9 @@ if not filtered_df.empty:
         dimensions=par_dims,
         color_continuous_scale=px.colors.sequential.Inferno
     )
-    st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
+    st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_safe")
 else:
-    st.warning("No patient records match the selected filter criteria. Please adjust your slider or filters.")
+    st.warning("No data available for current filter selection.")
 
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
 # 
