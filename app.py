@@ -183,6 +183,8 @@ if not filtered_df.empty:
 else:
     st.warning("No data available for current filter selection.")
 
+st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_safe")
+
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
 # 
 # Starting Question 1: Does weekly exercise hours alone protect patients against heart attack risk, regardless of age or cholesterol?
