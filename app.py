@@ -101,11 +101,11 @@ gender_col = next((col for col in ["Gender", "Patient_Gender", "Sex"] if col in 
 
 selected_gender = "All"
 if gender_col:
-    selected_gender = st.sidebar.selectbox("Select Gender", options=["All"] + list(df[gender_col].unique()))
+    selected_gender = st.sidebar.selectbox("Select Gender", options=["All"] + list(df[gender_col].unique()), key="gender_selectbox")
 
 age_range = st.sidebar.slider("Select Age Range", min_value=int(df["Age"].min()), max_value=int(df["Age"].max()), value=(30, 70))
 
-# Create filtered_df right here so it exists!
+# Create filtered_df right here
 filtered_df = df.copy()
 if gender_col and selected_gender != "All":
     filtered_df = filtered_df[filtered_df[gender_col] == selected_gender]
