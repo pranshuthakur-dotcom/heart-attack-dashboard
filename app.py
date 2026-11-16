@@ -176,10 +176,10 @@ fig_parcoords.update_layout(height=chart_height, use_container_width=True)
 st.subheader("Filtered Patient Data Preview")
 st.dataframe(filtered_df.head(5), use_container_width=True)
 
-st.plotly_chart(fig_scatter, use_container_width=True, key="unique_scatter_chart")
-st.plotly_chart(fig_box, use_container_width=True, key="unique_box_chart")
-st.plotly_chart(fig_hist, use_container_width=True, key="unique_hist_chart")
-st.plotly_chart(fig_parcoords, use_container_width=True, key="unique_parcoords_chart")
+st.plotly_chart(fig_scatter, use_container_width=True)
+st.plotly_chart(fig_box, use_container_width=True)
+st.plotly_chart(fig_hist, use_container_width=True)
+st.plotly_chart(fig_parcoords, use_container_width=True)
 
 print("Available columns:", filtered_df.columns.tolist())
 
