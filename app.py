@@ -155,13 +155,10 @@ st.dataframe(filtered_df, use_container_width=True)
 # ---Applied the sidebar selections to filter the underlying pandas DataFrame in real time. Whenever a user moves the age slider, all four chart functions re-render instantly using the filtered subset.
 
 fig_scatter = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
-st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart_1")
 
 fig_box = px.box(filtered_df, x="Heart_Attack_Risk", y="Cholesterol")
-st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
 
 fig_hist = px.histogram(filtered_df, x="Systolic_BP")
-st.plotly_chart(fig_hist, use_container_width=True, key="histogram_chart_1")
 
 chart_height = 400
 
