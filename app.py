@@ -93,8 +93,26 @@ df = df.dropna()
 # 5. Cleaning Step - standardize column names for simpler querying
 df.columns = df.columns.str.strip().str.replace(' ', '_')
 
-print(f"Cleaned dataset shape: {df.shape}")
-#display(df.head(3))
+# 6. Cleaning Step - create sidebar filters and filter_df
+st.sidebar.header("Patient Filter Controls")
+
+# Dynamically find gender column name
+gender_col = next((col for col in ["Gender", "Patient_Gender", "Sex"] if col in df.columns), None)
+
+selected_gender = "All"
+if gender_col:
+    selected_gender = st.sidebar.selectbox("Select Gender", options=["All"] + list(df[gender_col].unique()))
+
+age_range = st.sidebar.slider("Select Age Range", min_value=int(df["Age"].min()), max_value=int(df["Age"].max()), value=(30, 70))
+
+# Create filtered_df right here so it exists!
+filtered_df = df.copy()
+if gender_col and selected_gender != "All":
+    filtered_df = filtered_df[filtered_df[gender_col] == selected_gender]
+filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["Age"] <= age_range[1])]
+
+# 7. Cleaning Step - carefully render tables and charts
+st.subheader("Filtered Patient Data Preview")
 st.dataframe(filtered_df.head(3))
 
 # **4. Visualization Techniques**
