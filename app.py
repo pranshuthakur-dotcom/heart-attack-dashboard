@@ -157,9 +157,6 @@ st.dataframe(filtered_df, use_container_width=True)
 fig_scatter = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
 st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart_1")
 
-fig_scatter.update_layout(height=400, width=600)
-st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart_1")
-
 fig_box = px.box(filtered_df, x="Heart_Attack_Risk", y="Cholesterol")
 st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
 
