@@ -112,7 +112,7 @@ filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["A
 
 # 7. Cleaning Step - carefully render tables and charts
 st.subheader("Filtered Patient Data Preview")
-st.dataframe(filtered_df.head(3))
+st.dataframe(filtered_df, use_container_width=True)
 
 # **4. Visualization Techniques**
 # 
