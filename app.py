@@ -188,7 +188,14 @@ st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
 fig_hist = px.histogram(filtered_df, x="Systolic_BP")
 st.plotly_chart(fig_hist, use_container_width=True, key="histogram_chart_1")
 
-fig_parcoords = px.parallel_coordinates(filtered_df, ...)
+filtered_df["Risk_Numeric"] = filtered_df["Heart_Attack_Risk"].astype(int)
+
+fig_parcoords = px.parallel_coordinates(
+    filtered_df, 
+    color="Risk_Numeric",
+    dimensions=["Age", "Cholesterol", "Systolic_BP", "BMI", "Sleep_Hours", "Exercise_Hours_Per_Week"],
+    color_continuous_scale=px.colors.sequential.Inferno
+)
 st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
 
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
