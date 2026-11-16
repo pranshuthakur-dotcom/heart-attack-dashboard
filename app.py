@@ -179,8 +179,17 @@ if selected_gender != "All":
     filtered_df = filtered_df[filtered_df["Gender"] == selected_gender]
 filtered_df = filtered_df[(filtered_df["Age"] >= age_range[0]) & (filtered_df["Age"] <= age_range[1])]
 
-fig = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
-st.plotly_chart(fig)
+fig_scatter = px.scatter(filtered_df, x="Age", y="Cholesterol", color="Heart_Attack_Risk")
+st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart_1")
+
+fig_box = px.box(filtered_df, x="Heart_Attack_Risk", y="Cholesterol")
+st.plotly_chart(fig_box, use_container_width=True, key="box_chart_1")
+
+fig_hist = px.histogram(filtered_df, x="Systolic_BP")
+st.plotly_chart(fig_hist, use_container_width=True, key="histogram_chart_1")
+
+fig_parcoords = px.parallel_coordinates(filtered_df, ...)
+st.plotly_chart(fig_parcoords, use_container_width=True, key="parcoords_chart_1")
 
 # **Exploration Narrative: Questions, Dead Ends, and Key Findings**
 # 
